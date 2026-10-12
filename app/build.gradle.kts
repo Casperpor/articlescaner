@@ -13,6 +13,10 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        // Только процессоры ARM (практически все телефоны); x86 не включаем — APK меньше
+        ndk {
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+        }
     }
 
     buildTypes {
@@ -28,15 +32,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
-    }
-    // Отдельный APK под каждую архитектуру процессора — так файл в 2,5 раза меньше
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("arm64-v8a", "armeabi-v7a")
-            isUniversalApk = false
-        }
     }
     lint {
         checkReleaseBuilds = false
